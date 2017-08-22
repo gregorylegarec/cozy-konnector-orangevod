@@ -4,12 +4,12 @@ const request = require('request')
 // require('request-debug')(request)
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-// const localization = require('../lib/localization_manager')
 const {log, updateOrCreate, models} = require('cozy-konnector-libs')
 const baseKonnector = require('./base_konnector_with_remember')
 
-const VideoStream = models.baseModel.createNew({name: 'org.fing.mesinfos.videostream', displayName: 'videostream'})
+const VideoStream = models.baseModel.createNew({name: 'fr.orange.videostream', displayName: 'videostream'})
 
+const DOCTYPE_VERSION = 'cozy-konnector-orangelivebox 2.0.0'
 const API_ROOT = 'https://mesinfos.orange.fr'
 
 /*
@@ -20,25 +20,12 @@ const connector = module.exports = baseKonnector.createNew({
   name: 'Orange Livebox',
   customView: '<%t konnector customview orange_livebox %>',
 
-  connectUrl: 'https://mesinfos.orange.fr/auth?redirect_url=',
-  category: 'isp',
-  color: {
-    hex: '#FF6600',
-    css: '#FF6600'
-  },
-
-  fields: {
-    frequency: {
-      type: 'dropdown',
-      default: 'weekly',
-      advanced: true,
-      options: ['hourly', 'daily', 'weekly', 'monthly']
-    },
-    access_token: {
-      type: 'hidden'
-    }
-  },
-  dataType: ['videostream'],
+  // category: 'isp',
+  // color: {
+  //   hex: '#FF6600',
+  //   css: '#FF6600'
+  // },
+  // dataType: ['videostream'],
   models: [VideoStream],
 
   fetchOperations: [
@@ -57,8 +44,6 @@ function initProperties (requiredFields, entries, data, next) {
 }
 
 function checkToken (requiredFields, entries, data, next) {
-  log('info', 'requiredFields')
-  log('info', requiredFields)
   const token = requiredFields.access_token
   if (!token) { return next('token not found') }
 
@@ -98,8 +83,7 @@ function downloadVod (requiredFields, entries, data, next) {
       if (vod.err) { return }
 
       entries.videostreams.push({
-        docType: 'VideoStream',
-        docTypeVersion: connector.docTypeypeVersion,
+        docTypeVersion: DOCTYPE_VERSION,
         content: {
           type: vod.cont_type,
           title: vod.cont_title,
