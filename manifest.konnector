@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "name": "Orange Livebox",
   "type": "node",
   "slug": "orangelivebox",
@@ -8,8 +8,9 @@
   "fields": {
     "account": {
       "doctype": "io.cozy.accounts",
-      "account_type": "orange",
-      "accountFormat": "access_token"
+      "account_type": "orangelivebox",
+      "accountFormat": "access_token",
+      "scope": "I"
     }
   },
   "locales": {
@@ -25,7 +26,7 @@
   "permissions": {
     "videostream": {
       "description": "Import your VoD and replay watching log from Orange",
-      "type": "org.fing.mesinfos.videostream"
+      "type": "fr.orange.videostream"
     },
     "accounts": {
       "description": "Required to get the account's data",
@@ -34,7 +35,7 @@
     }
   },
   "developer": {
-    "name": "cozy",
-    "url": "https://cozy.io"
+    "name": "Fing",
+    "url": "http://mesinfos.fing.org"
   }
 }

@@ -1,4 +1,4 @@
-[Cozy][cozy] Orange VOD konnector
+[Cozy][cozy] Orange Livebox konnector
 =================================
 
 What's Cozy?
