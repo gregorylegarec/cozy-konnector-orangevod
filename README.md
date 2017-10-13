@@ -100,7 +100,8 @@ The bills (or any file) will be saved in the ./data directory.
 
 ### Maintainer
 
-The lead maintainers for this konnector is <TODO>
+The lead maintainers for this konnector is @doubleface for Cozy Cloud. Before,
+it was created and maintained by @nicofrand.
 
 
 ### Get in touch
