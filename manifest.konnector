@@ -32,6 +32,10 @@
       "description": "Required to get the account's data",
       "type": "io.cozy.accounts",
       "verbs": ["GET", "PUT"]
+    },
+    "files": {
+      "description": "Required to make connector work.",
+      "type": "io.cozy.files"
     }
   },
   "developer": {
