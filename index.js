@@ -16,7 +16,6 @@ module.exports = new BaseKonnector(function fetch (fields) {
   .then(() => downloadVod(fields))
   .then(entries => updateOrCreate(entries, DOCTYPE, ['clientId', 'timestamp']))
   .then(() => {
-    console.log(fields, 'RESULTING FIELDS')
     this.saveAccountData(fields.remember)
   })
 })
@@ -53,11 +52,10 @@ function downloadVod (fields) {
   return requestOrange(uri, fields.access_token)
   .then(body => {
     const videostreams = []
-    if (body.forEach) {
+    if (body && body.forEach) {
       body.forEach((vod) => {
         if (vod.ts && (!fields.remember.lastVideoStream || fields.remember.lastVideoStream < vod.ts)) {
           fields.remember.lastVideoStream = vod.ts
-          console.log(fields, 'FIELDS')
         }
 
         if (vod.err) { return }
