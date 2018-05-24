@@ -6,11 +6,8 @@
   "description": "Les données mises à disposition par Orange via ce connecteur contiennent la liste des films que vous avez visionnés  à partir du 01/01/2015 en VOD payante ou gratuite (Replay TV) à partir de votre Livebox (à l’exception des contenus « adulte »). Vous pourrez utiliser ces données dans différentes applications de votre Cozy Cloud, par exemple « La Musique de mes Films » (disponibilité prochaine sur le Cozy Store)",
   "source": "git://github.com/cozy/cozy-konnector-orangevod.git",
   "fields": {
-    "account": {
-      "doctype": "io.cozy.accounts",
-      "account_type": "orangelivebox",
-      "accountFormat": "access_token",
-      "scope": "I"
+    "access_token": {
+      "type": "hidden"
     }
   },
   "locales": {
@@ -22,6 +19,9 @@
         }
       }
     }
+  },
+  "oauth": {
+    "scope": "I"
   },
   "permissions": {
     "videostream": {
