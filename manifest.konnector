@@ -1,4 +1,8 @@
 {
+  "categories": ["telecom"],
+  "data_types": ["videostream"],
+  "editor": "Orange",
+  "icon": "icon.svg",
   "version": "2.0.0",
   "name": "Orange Livebox",
   "type": "node",
@@ -10,9 +14,24 @@
       "type": "hidden"
     }
   },
+  "langs": ["en", "fr"],
   "locales": {
+    "en": {
+      "description": "Data from Orange videos",
+      "messages": {
+        "service": "This connector will download data from your Orange account on your Cozy. It will automatically download the list of movies you downloaded in free (TV Replay) or paid VOD from 01/01/2015 (adult contents are not included).\n\nYou will be able to use these data in different apps in your Cozy, for example \"My Movies Music\" (available soon on the Cozy Store)."
+      },
+      "permissions": {
+        "accounts": {
+          "description": "Used to fetch data from providers"
+        }
+      }
+    },
     "fr": {
       "description": "Les données mises à disposition par Orange",
+      "messages": {
+        "service": "Les données mises à disposition par Orange via ce connecteur contiennent la liste des films que vous avez visionnés à partir du 01/01/2015 en VOD payante ou gratuite (Replay TV) à partir de votre Livebox (à l’exception des contenus « adulte »).\n\n\nVous pourrez utiliser ces données dans différentes applications de votre Cozy, par exemple « La Musique de mes Films » (disponibilité prochaine sur le Cozy Store)"
+      },
       "permissions": {
         "accounts": {
           "description": "Utilisé pour récupérer les données de compte"
@@ -20,6 +39,7 @@
       }
     }
   },
+  "manifest_version": "2",
   "oauth": {
     "scope": "I"
   },
@@ -41,5 +61,6 @@
   "developer": {
     "name": "Fing",
     "url": "http://mesinfos.fing.org"
-  }
+  },
+  "vendor_link": "http://orange.fr"
 }
