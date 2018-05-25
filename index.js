@@ -1,6 +1,11 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'
 
-const {BaseKonnector, log, request, updateOrCreate} = require('cozy-konnector-libs')
+const {
+  BaseKonnector,
+  log,
+  request,
+  updateOrCreate
+} = require('cozy-konnector-libs')
 
 const DOCTYPE = 'fr.orange.videostream'
 const DOCTYPE_VERSION = 'cozy-konnector-orangelivebox 2.0.0'
@@ -10,17 +15,19 @@ const rq = request({
   // debug: true
 })
 
-module.exports = new BaseKonnector(function fetch (fields) {
+module.exports = new BaseKonnector(function fetch(fields) {
   fields.remember = this.getAccountData().remember || {}
   return checkToken(fields)
-  .then(() => downloadVod(fields))
-  .then(entries => updateOrCreate(entries, DOCTYPE, ['clientId', 'timestamp']))
-  .then(() => {
-    this.saveAccountData(fields.remember)
-  })
+    .then(() => downloadVod(fields))
+    .then(entries =>
+      updateOrCreate(entries, DOCTYPE, ['clientId', 'timestamp'])
+    )
+    .then(() => {
+      this.saveAccountData(fields.remember)
+    })
 })
 
-function checkToken (fields) {
+function checkToken(fields) {
   const token = fields.access_token
   if (!token) {
     log('warn', 'token not found')
@@ -43,22 +50,27 @@ function checkToken (fields) {
   }
 }
 
-function downloadVod (fields) {
+function downloadVod(fields) {
   log('info', 'Downloading vod data from Orange...')
   let uri = `${API_ROOT}/data/vod`
   if (fields.remember.lastVideoStream) {
     uri += `?start=${fields.remember.lastVideoStream.slice(0, 19)}`
   }
-  return requestOrange(uri, fields.access_token)
-  .then(body => {
+  return requestOrange(uri, fields.access_token).then(body => {
     const videostreams = []
     if (body && body.forEach) {
-      body.forEach((vod) => {
-        if (vod.ts && (!fields.remember.lastVideoStream || fields.remember.lastVideoStream < vod.ts)) {
+      body.forEach(vod => {
+        if (
+          vod.ts &&
+          (!fields.remember.lastVideoStream ||
+            fields.remember.lastVideoStream < vod.ts)
+        ) {
           fields.remember.lastVideoStream = vod.ts
         }
 
-        if (vod.err) { return }
+        if (vod.err) {
+          return
+        }
 
         videostreams.push({
           docTypeVersion: DOCTYPE_VERSION,
@@ -72,12 +84,15 @@ function downloadVod (fields) {
             country: vod.prod_nat,
             id: vod.cont_id,
             longId: vod.src_id,
-            adultLevel: vod.adult_level === 'none' ? undefined : vod.adult_level,
+            adultLevel:
+              vod.adult_level === 'none' ? undefined : vod.adult_level,
             csaCode: vod.csa_code
           },
           price: vod.price,
           timestamp: vod.ts,
-          viewingDuration: vod.use_duration ? Math.round(Number(vod.use_duration) * 60) : undefined,
+          viewingDuration: vod.use_duration
+            ? Math.round(Number(vod.use_duration) * 60)
+            : undefined,
           details: {
             offer: vod.offer,
             offerName: vod.offer_name,
@@ -87,7 +102,7 @@ function downloadVod (fields) {
             device: vod.device,
             platform: vod.platf
           },
-          action: vod.action,  // visualisation or command
+          action: vod.action, // visualisation or command
           clientId: vod.line_id
         })
       })
@@ -97,13 +112,12 @@ function downloadVod (fields) {
 }
 
 // Helpers //
-function requestOrange (uri, token) {
+function requestOrange(uri, token) {
   log('info', uri)
   return rq({
     url: uri,
     auth: { bearer: token }
-  })
-  .catch(err => {
+  }).catch(err => {
     log('error', `Download failed: ${err}`)
     console.log(err, 'error details')
   })
