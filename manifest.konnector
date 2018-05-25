@@ -40,6 +40,7 @@
     }
   },
   "manifest_version": "2",
+  "messages": ["service"],
   "oauth": {
     "scope": "I"
   },
