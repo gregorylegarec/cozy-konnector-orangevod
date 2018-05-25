@@ -11,7 +11,7 @@ module.exports = {
   plugins: [
     new CopyPlugin([
       { from: 'manifest.konnector' },
-      { from: 'package.json' },
+      { from: 'assets'},
       { from: 'README.md' },
       { from: 'LICENSE' }
     ])
